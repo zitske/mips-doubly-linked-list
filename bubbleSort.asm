@@ -1,21 +1,3 @@
-#   void BubbleSort(int *array, int size) {
-#
-#       int i, j, temp;
-#       int swap = 1;
-#
-#       while (swap == 1) {
-#           swap = 0;
-#           for(i = 0, j = 1; j < size; i++, j++)
-#               if (array[i] > array[j]) {
-#                   temp = array[j];
-#                   array[j] = array[i];
-#                   array[i] = temp;
-#                   swap = 1;
-#               }
-#           }
-#       }
-
-
 .text
     
     # a0: &array
