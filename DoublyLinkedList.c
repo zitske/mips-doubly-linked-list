@@ -25,6 +25,10 @@ struct DoubledLinkedList {
     struct Node *tail;        /* Points the last node */
 };
 
+/* Prototypes of Assembly functions */
+extern void InsertNode_asm(struct DoubledLinkedList *list, struct Node *newNode);
+extern struct DoubledLinkedList *CloneList_asm(struct DoubledLinkedList *list);
+
 /* Initialize the list struct as an empty list */
 void CreateList(struct DoubledLinkedList *list) {
 
@@ -159,8 +163,6 @@ void PrintListReverse(struct DoubledLinkedList *list) {
     }
 }
 
-
-
 int main() {
 
     struct DoubledLinkedList list, *clonedList;
@@ -173,63 +175,42 @@ int main() {
     strcpy(newNode->student->name,"Ozzy Osbourne");
     newNode->student->registration = 666;
     strcpy(newNode->student->course,"Heavy Metal");
-    if (InsertNode(&list,newNode) == STUDENT_ALREADY_INSERTED)  /* Empty list: insert the node as first and last */
-        printf("Student %s already inserted.\n",newNode->student->name);
-    
-    newNode = (struct Node *)malloc(sizeof(struct Node));
-    newNode->student = (struct Student *)malloc(sizeof(struct Student));
-    strcpy(newNode->student->name,"Ozzy Osbourne");
-    newNode->student->registration = 666;
-    strcpy(newNode->student->course,"Heavy Metal");
-    if (InsertNode(&list,newNode) == STUDENT_ALREADY_INSERTED)  /* Try to insert an already inserted student */
-        printf("Student %s already inserted.\n",newNode->student->name);
+    InsertNode_asm(&list, newNode);
         
     newNode = (struct Node *)malloc(sizeof(struct Node));
     newNode->student = (struct Student *)malloc(sizeof(struct Student));
     strcpy(newNode->student->name,"Scott Ian");
     newNode->student->registration = 670;
     strcpy(newNode->student->course,"Thrash Metal");
-    if (InsertNode(&list,newNode) == STUDENT_ALREADY_INSERTED)  /* Inserts before the first node (new head node) */
-        printf("Student %s already inserted.\n",newNode->student->name);
+    InsertNode_asm(&list, newNode);
         
     newNode = (struct Node *)malloc(sizeof(struct Node));
     newNode->student = (struct Student *)malloc(sizeof(struct Student));
     strcpy(newNode->student->name,"Vince Neil");
     newNode->student->registration = 668;
     strcpy(newNode->student->course,"Hard Rock");
-    if (InsertNode(&list,newNode) == STUDENT_ALREADY_INSERTED)  /* Inserts between two nodes */
-        printf("Student %s already inserted.\n",newNode->student->name);
+    InsertNode_asm(&list, newNode);
         
     newNode = (struct Node *)malloc(sizeof(struct Node));
     newNode->student = (struct Student *)malloc(sizeof(struct Student));
     strcpy(newNode->student->name,"Lemmy Kilmister (R.I.P.)");
     newNode->student->registration = 660;
     strcpy(newNode->student->course,"Extreme Rock and Roll");
-    if (InsertNode(&list,newNode) == STUDENT_ALREADY_INSERTED)  /* Inserts after the last node (new tail node) */
-        printf("Student %s already inserted.\n",newNode->student->name);
+    InsertNode_asm(&list, newNode);
         
     newNode = (struct Node *)malloc(sizeof(struct Node));
     newNode->student = (struct Student *)malloc(sizeof(struct Student));
     strcpy(newNode->student->name,"Robert Johnson (R.I.P.)");
     newNode->student->registration = 671;
     strcpy(newNode->student->course,"Delta Blues");
-    if (InsertNode(&list,newNode) == STUDENT_ALREADY_INSERTED)  /* Inserts before the first node (new head node) */
-        printf("Student %s already inserted.\n",newNode->student->name);
-        
-    newNode = (struct Node *)malloc(sizeof(struct Node));
-    newNode->student = (struct Student *)malloc(sizeof(struct Student));
-    strcpy(newNode->student->name,"Robert Johnson (R.I.P.)");
-    newNode->student->registration = 671;
-    strcpy(newNode->student->course,"Delta Blues");
-    if (InsertNode(&list,newNode) == STUDENT_ALREADY_INSERTED)   /* Try to insert an already inserted student */
-        printf("Student %s already inserted.\n",newNode->student->name);
+    InsertNode_asm(&list, newNode);
   
     printf("\nList size: %d\n",list.size);
     PrintList(&list);
     printf("\n");
     PrintListReverse(&list); 
 
-    clonedList = CloneList(&list);
+    clonedList = CloneList_asm(&list);
     printf("\nCloned list\n");
     printf("List size: %d\n",clonedList->size);
     PrintList(clonedList);
